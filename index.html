@@ -18,7 +18,11 @@
             <input type="password" id="apiKey" placeholder="输入你的 API Key">
 
             <div class="button-group">
+                <label for="apiKey">Provider Name:</label>
                 <input type="text" id="providerName" class="provider-name-input" placeholder="Provider 名称 (用于保存)">
+                <label for="timeoutInput" style="margin-left:10px;">超时时长(ms):</label>
+                <input type="number" id="timeoutInput" min="1000" max="600000" value="10000" style="width:100px;">
+                <button id="saveProviderBtn" class="btn-success">保存 Provider</button>
                 <button id="saveProviderBtn" class="btn-success">保存 Provider</button>
                 <button id="fetchModelsBtn" class="btn-primary">获取模型列表</button>
                 <div id="loaderModels" class="loader"></div>
@@ -46,6 +50,10 @@
                 <button id="toggleModelsBtn" class="btn-secondary">切换到多模型测试</button>
                 <div id="loaderTest" class="loader"></div>
              </div>
+        </div>
+        <div style="margin-top:10px;">
+            <label for="testPrompt">测试用提示词 (Prompt):</label>
+            <textarea id="testPrompt" rows="3" style="width:100%;" placeholder="请输入你想用来测试模型的提示词，例如：\n你好，请介绍一下你自己。"></textarea>
         </div>
 
         <div id="multiModelSection" style="display: none;">

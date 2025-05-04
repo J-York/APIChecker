@@ -1,55 +1,86 @@
+/* --- CSS Variables (Theme & Global Styles) --- */
 :root {
-    --primary-color: #007bff;
-    --primary-hover-color: #0056b3;
-    --secondary-color: #6c757d;
-    --secondary-hover-color: #5a6268;
-    --success-color: #28a745;
-    --success-hover-color: #218838;
-    --danger-color: #dc3545;
-    --danger-hover-color: #c82333;
-    --warning-color: #ffc107;
-    --warning-hover-color: #e0a800;
-    --info-color: #17a2b8;
-    --info-hover-color: #138496;
+    /* Theme Colors */
+    --primary-color: #007bff; /* 主题主色调 */
+    --primary-hover-color: #0056b3; /* 主题主色调悬停 */
+    --primary-color-rgb: 0, 123, 255; /* 主题主色调RGB值，用于RGBA */
 
-    --bg-color: #f8f9fa;
-    --container-bg: #ffffff;
-    --card-bg: #ffffff;
-    --input-bg: #ffffff;
-    --input-border: #ced4da;
-    --input-focus-border: #80bdff;
-    --text-color: #212529;
-    --text-muted: #6c757d;
-    --heading-color: #343a40;
-    --border-color: #dee2e6;
-    --box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
-    --border-radius: 6px;
-    --font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
-    --font-family-monospace: SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+    --secondary-color: #6c757d; /* 次要色 */
+    --secondary-hover-color: #5a6268; /* 次要色悬停 */
 
+    --success-color: #28a745; /* 成功色 */
+    --success-hover-color: #218838; /* 成功色悬停 */
+    --success-bg-light: rgba(40, 167, 69, 0.1); /* 成功色浅背景 */
+
+    --danger-color: #dc3545; /* 危险/错误色 */
+    --danger-hover-color: #c82333; /* 危险/错误色悬停 */
+    --danger-bg-light: rgba(220, 53, 69, 0.1); /* 危险/错误色浅背景 */
+
+    --warning-color: #ffc107; /* 警告色 */
+    --warning-hover-color: #e0a800; /* 警告色悬停 */
+    --warning-bg-light: rgba(255, 193, 7, 0.1); /* 警告色浅背景 */
+
+    --info-color: #17a2b8; /* 信息色 */
+    --info-hover-color: #138496; /* 信息色悬停 */
+    --info-bg-light: rgba(23, 162, 184, 0.1); /* 信息色浅背景 */
+
+    /* Backgrounds */
+    --bg-color: #f8f9fa; /* 页面背景 */
+    --container-bg: #ffffff; /* 容器背景 */
+    --card-bg: #ffffff; /* 卡片背景 */
+    --input-bg: #ffffff; /* 输入框背景 */
+    --input-bg-alt: #f8f9fa; /* 交替输入框/列表背景 */
+    --disabled-bg: #e9ecef; /* 禁用背景 */
+
+    /* Borders & Shadows */
+    --border-color: #dee2e6; /* 边框颜色 */
+    --input-border: #ced4da; /* 输入框边框 */
+    --input-focus-border: #80bdff; /* 输入框焦点边框 (基于 primary-color) */
+    --focus-ring-shadow: 0 0 0 0.2rem rgba(var(--primary-color-rgb), 0.25); /* 焦点环阴影 */
+    --box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08); /* 主要阴影 */
+    --card-shadow: 0 2px 4px rgba(0,0,0,0.05); /* 卡片阴影 */
+    --card-hover-shadow: 0 4px 8px rgba(0,0,0,0.1); /* 卡片悬停阴影 */
+
+    /* Text Colors */
+    --text-color: #212529; /* 主要文本颜色 */
+    --text-muted: #6c757d; /* 静默/辅助文本颜色 */
+    --heading-color: #343a40; /* 标题颜色 */
+    --disabled-color: #6c757d; /* 禁用文本颜色 */
+
+    /* Spacing (Consistent scale) */
     --spacing-xs: 4px;
     --spacing-sm: 8px;
     --spacing-md: 16px;
     --spacing-lg: 24px;
     --spacing-xl: 32px;
+
+    /* Typography */
+    --font-family: -apple-system, BlinkMacMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+    --font-family-monospace: SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+    --font-size-base: 1rem; /* 16px */
+    --font-size-sm: 0.9rem;
+    --font-size-lg: 1.1rem;
+    --line-height-base: 1.6;
+    --border-radius: 6px; /* 统一圆角 */
 }
 
-/* --- 基础样式 --- */
+/* --- Base Styles --- */
 *, *::before, *::after {
     box-sizing: border-box;
 }
 
 html {
-    font-size: 16px; /* 基准字号 */
+    font-size: var(--font-size-base); /* 基准字号 */
 }
 
 body {
     font-family: var(--font-family);
-    line-height: 1.6;
+    line-height: var(--line-height-base);
     color: var(--text-color);
     background-color: var(--bg-color);
     margin: 0;
     padding: var(--spacing-lg);
+    min-height: 100vh; /* 确保body至少占满视口高度 */
 }
 
 .main-wrapper {
@@ -66,11 +97,13 @@ body {
     box-shadow: var(--box-shadow);
 }
 
+/* --- Typography --- */
 h1, h2, h3, h4 {
     color: var(--heading-color);
     margin-top: 0;
     margin-bottom: var(--spacing-md);
     font-weight: 500;
+    line-height: 1.2;
 }
 
 h1 {
@@ -92,7 +125,7 @@ h3 {
 }
 
 h4 {
-    font-size: 1.1rem;
+    font-size: var(--font-size-lg);
 }
 
 label {
@@ -100,37 +133,57 @@ label {
     margin-bottom: var(--spacing-xs);
     font-weight: 500;
     color: var(--text-muted);
-    font-size: 0.9rem;
+    font-size: var(--font-size-sm);
 }
 
+hr {
+    border: 0;
+    border-top: 1px solid var(--border-color);
+    margin: var(--spacing-xl) 0;
+}
+
+/* --- Form Elements --- */
 input[type="text"],
 input[type="password"],
 input[type="number"],
-select {
+select,
+textarea { /* 统一 textarea 样式 */
     width: 100%;
     padding: var(--spacing-sm) var(--spacing-md);
-    margin-bottom: var(--spacing-md);
+    margin-bottom: var(--spacing-md); /* Default bottom margin */
     border: 1px solid var(--input-border);
     border-radius: var(--border-radius);
     background-color: var(--input-bg);
-    font-size: 1rem;
+    font-size: var(--font-size-base);
+    font-family: var(--font-family); /* Use base font for textareas too */
+    color: var(--text-color);
     transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
-    height: 40px; /* 新增：统一高度，确保与按钮高度一致 */
-    box-sizing: border-box; /* 确保高度计算包含内边距和边框 */
+    height: 40px; /* 统一高度 */
+    box-sizing: border-box;
+}
+
+textarea {
+    height: 100px; /* 保持 textarea 的默认高度 */
+    resize: vertical;
+    line-height: var(--line-height-base);
+    font-family: var(--font-family-monospace); /* Textarea for code/prompt might prefer monospace */
+    padding: var(--spacing-md); /* Slightly more padding for textarea */
 }
 
 input[type="text"]:focus,
 input[type="password"]:focus,
-input[type="number"],
-select:focus {
+input[type="number"]:focus, /* Added focus state for number input */
+select:focus,
+textarea:focus { /* Added focus state for textarea */
     border-color: var(--input-focus-border);
     outline: 0;
-    box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
+    box-shadow: var(--focus-ring-shadow);
+    background-color: var(--input-bg); /* Ensure background stays consistent on focus */
 }
 
 select {
     appearance: none; /* Remove default arrow */
-    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3e%3cpath fill='none' stroke='%23343a40' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M2 5l6 6 6-6'/%3e%3c/svg%3e");
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3e%3cpath fill='none' stroke='%23343a40' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M2 5l6 6 6-6'/%3e%3c/svg%3e"); /* Using heading-color for arrow */
     background-repeat: no-repeat;
     background-position: right var(--spacing-md) center;
     background-size: 16px 12px;
@@ -138,14 +191,14 @@ select {
 }
 
 button {
-    display: inline-flex; /* Aligns icon/loader */
+    display: inline-flex;
     align-items: center;
     justify-content: center;
-    padding: 0 18px; /* 修改：移除固定高度的padding，改为自适应 */
+    padding: 0 var(--spacing-md); /* Use spacing variable for horizontal padding */
     border: none;
     border-radius: var(--border-radius);
     cursor: pointer;
-    font-size: 0.95rem;
+    font-size: var(--font-size-base); /* Use base font size */
     font-weight: 500;
     line-height: 1.5;
     text-align: center;
@@ -155,19 +208,20 @@ button {
     transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out, border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
     margin-right: var(--spacing-sm); /* Default spacing */
     margin-bottom: var(--spacing-sm); /* Spacing for wrapping */
-    height: 40px; /* 新增：统一高度，与输入框一致 */
-    min-width: 80px; /* 新增：确保按钮有最小宽度，防止内容过短时显得不协调 */
+    height: 40px; /* 统一高度 */
+    min-width: 80px; /* 最小宽度 */
+    flex-shrink: 0; /* Prevent buttons from shrinking too much in flex containers */
 }
 
 button:not(:disabled):hover {
-    filter: brightness(90%);
+    filter: brightness(90%); /* Simple hover effect */
 }
 
 button:disabled {
-    background-color: #cccccc;
-    color: #666666;
+    background-color: var(--disabled-bg);
+    color: var(--disabled-color);
     cursor: not-allowed;
-    opacity: 0.65;
+    opacity: 0.8; /* Slightly less opaque than original */
 }
 
 /* --- Specific Button Colors --- */
@@ -180,7 +234,7 @@ button:disabled {
 .btn-danger { background-color: var(--danger-color); color: white; }
 .btn-danger:hover { background-color: var(--danger-hover-color); }
 
-.btn-warning { background-color: var(--warning-color); color: #212529; }
+.btn-warning { background-color: var(--warning-color); color: var(--text-color); } /* Warning text usually dark */
 .btn-warning:hover { background-color: var(--warning-hover-color); }
 
 .btn-info { background-color: var(--info-color); color: white; }
@@ -197,19 +251,14 @@ button:disabled {
 .btn-outline-secondary:hover {
     color: white;
     background-color: var(--secondary-color);
+    border-color: var(--secondary-color); /* Ensure border changes too */
 }
 
 .btn-sm { /* Smaller buttons for actions */
-    padding: 0 10px; /* 修改：调整内边距以适应小按钮 */
-    font-size: 0.8rem;
-    height: 30px; /* 新增：小按钮使用较小高度 */
-    min-width: 60px; /* 新增：小按钮的最小宽度 */
-}
-
-hr {
-    border: 0;
-    border-top: 1px solid var(--border-color);
-    margin: var(--spacing-xl) 0;
+    padding: 0 var(--spacing-sm); /* Smaller horizontal padding */
+    font-size: var(--font-size-sm);
+    height: 30px; /* Smaller height */
+    min-width: 60px; /* Smaller min width */
 }
 
 /* --- Result Area --- */
@@ -217,7 +266,7 @@ hr {
     margin-top: var(--spacing-lg);
     padding: var(--spacing-md);
     border: 1px solid var(--border-color);
-    background-color: #f8f9fa;
+    background-color: var(--input-bg-alt); /* Use alt background */
     border-radius: var(--border-radius);
     white-space: pre-wrap;
     word-wrap: break-word;
@@ -225,18 +274,19 @@ hr {
     min-height: 150px;
     max-height: 450px;
     overflow-y: auto;
-    font-size: 0.9rem;
-    color: var(--text-muted); /* Default color */
+    font-size: var(--font-size-sm);
+    color: var(--text-color); /* Default text color */
 }
 
-#resultArea.success { border-left: 4px solid var(--success-color); color: var(--success-color); background-color: #e9f7ef;}
-#resultArea.error { border-left: 4px solid var(--danger-color); color: var(--danger-color); background-color: #fbe Sdf;}
-#resultArea.info { border-left: 4px solid var(--info-color); color: var(--info-color); background-color: #e8f7fa;}
+/* Status specific styles */
+#resultArea.success { border-left: 4px solid var(--success-color); color: var(--success-color); background-color: var(--success-bg-light); }
+#resultArea.error { border-left: 4px solid var(--danger-color); color: var(--danger-color); background-color: var(--danger-bg-light); } /* Fixed typo */
+#resultArea.info { border-left: 4px solid var(--info-color); color: var(--info-color); background-color: var(--info-bg-light); }
 
 /* --- Loader --- */
 .loader {
-    border: 4px solid #f3f3f3;
-    border-top: 4px solid var(--primary-color);
+    border: 4px solid var(--border-color); /* Use border color for outer ring */
+    border-top: 4px solid var(--primary-color); /* Use primary color for spinning part */
     border-radius: 50%;
     width: 20px;
     height: 20px;
@@ -244,6 +294,7 @@ hr {
     display: none; /* Hidden by default */
     vertical-align: middle;
     margin-left: var(--spacing-sm);
+    flex-shrink: 0; /* Prevent shrinking in flex containers */
 }
 
 @keyframes spin {
@@ -251,38 +302,51 @@ hr {
     100% { transform: rotate(360deg); }
 }
 
-/* --- Layout Sections --- */
+/* --- Layout Sections (Flex/Grid Containers) --- */
 .input-group {
-        display: flex;
-        gap: var(--spacing-md);
-        margin-bottom: var(--spacing-md);
-        align-items: flex-end; /* Align items nicely */
+    display: flex;
+    gap: var(--spacing-md);
+    margin-bottom: var(--spacing-md);
+    align-items: flex-end; /* Align items nicely */
+    flex-wrap: wrap; /* Allow wrapping on smaller screens */
 }
+
 .input-group > * {
     margin-bottom: 0; /* Remove default bottom margin */
 }
+
 .input-group > label {
-        flex-basis: 120px; /* Fixed label width */
-        margin-bottom: var(--spacing-xs); /* Small space below label */
-        align-self: center; /* Center label vertically */
-}
-.input-group > input, .input-group > select {
-    flex: 1; /* Input takes remaining space */
+    flex-basis: 120px; /* Fixed label width */
+    flex-shrink: 0; /* Prevent label from shrinking */
+    margin-bottom: var(--spacing-xs); /* Small space below label when stacked */
+    align-self: center; /* Center label vertically */
 }
 
+.input-group > input,
+.input-group > select,
+.input-group > textarea { /* Include textarea */
+    flex: 1 1 auto; /* Input takes remaining space, allows shrinking/growing */
+    min-width: 150px; /* Ensure inputs don't become too small before wrapping */
+}
+
+#threadCount {
+    width: 60px; /* Specific width */
+    flex-basis: 60px; /* Also set flex-basis */
+    flex-grow: 0; /* Prevent growing */
+    flex-shrink: 0; /* Prevent shrinking */
+    margin-left: var(--spacing-sm);
+    padding: var(--spacing-sm); /* Adjust padding for smaller width */
+    text-align: center; /* Center text in number input */
+}
 
 .button-group {
     display: flex;
     flex-wrap: wrap;
     gap: var(--spacing-sm);
-    margin-top: var(--spacing-md);
+    margin-top: 0;
     margin-bottom: var(--spacing-lg);
     align-items: center; /* Align buttons vertically */
 }
-    .provider-name-input {
-    flex: 1 1 200px; /* Allow growing and shrinking, base width */
-        margin-right: var(--spacing-sm); /* Space before save button */
-    }
 
 /* --- Model Selection & Testing --- */
 .model-input-container {
@@ -290,9 +354,10 @@ hr {
     gap: var(--spacing-md);
     margin-bottom: var(--spacing-md);
     align-items: center;
+    flex-wrap: wrap; /* Allow wrapping */
 }
-.model-input-container select { flex: 3; margin-bottom: 0; }
-.model-input-container input { flex: 2; margin-bottom: 0; }
+.model-input-container select { flex: 3 1 200px; margin-bottom: 0; } /* Allow growing, base width */
+.model-input-container input { flex: 2 1 150px; margin-bottom: 0; } /* Allow growing, base width */
 
 
 #multiModelSection {
@@ -303,20 +368,21 @@ hr {
 
 .select-actions {
     display: flex;
-    justify-content: flex-start; /* Align actions to the left */
+    justify-content: flex-start;
     gap: var(--spacing-sm);
     margin-bottom: var(--spacing-md);
     flex-wrap: wrap;
+    align-items: center;
 }
 .select-actions button {
-    margin-right: 0; /* Reset default margin */
-    padding: 6px 12px;
-    font-size: 0.85rem;
+    margin: 0; /* Reset default button margins */
+    padding: 6px var(--spacing-md); /* Adjusted padding */
+    font-size: var(--font-size-sm);
+    height: 30px; /* Match btn-sm height */
 }
-    .select-actions .toggle-models-btn {
+.select-actions .toggle-models-btn {
     margin-left: auto; /* Push toggle button to the right */
-    }
-
+}
 
 .models-container {
     max-height: 300px;
@@ -325,7 +391,7 @@ hr {
     border-radius: var(--border-radius);
     padding: var(--spacing-md);
     margin-bottom: var(--spacing-md);
-    background-color: #f8f9fa; /* Slight background */
+    background-color: var(--input-bg-alt); /* Use alt background */
 }
 .model-checkbox {
     display: flex;
@@ -337,21 +403,23 @@ hr {
     transition: background-color 0.15s ease;
 }
 .model-checkbox:hover {
-    background-color: #e9ecef;
+    background-color: #e9ecef; /* Slightly darker alt background */
 }
 .model-checkbox input[type="checkbox"] {
     margin-right: var(--spacing-md);
-    width: auto; /* Override default width */
-    margin-bottom: 0; /* Override default margin */
+    width: auto;
+    margin-bottom: 0;
     cursor: pointer;
-    transform: scale(1.1); /* Slightly larger checkbox */
+    transform: scale(1.1);
+    flex-shrink: 0; /* Prevent checkbox from shrinking */
 }
 .model-checkbox label {
     margin-bottom: 0;
     font-weight: normal;
     cursor: pointer;
-    flex: 1;
-    color: var(--text-color); /* Ensure label color is standard */
+    flex: 1; /* Label takes remaining space */
+    color: var(--text-color);
+    line-height: 1.2; /* Adjust line height if labels wrap */
 }
 .no-models {
     text-align: center;
@@ -365,28 +433,28 @@ hr {
     width: 100%;
     border-collapse: collapse;
     margin-top: var(--spacing-lg);
-    font-size: 0.9rem;
+    font-size: var(--font-size-sm);
 }
 .test-results-table th,
 .test-results-table td {
     border: 1px solid var(--border-color);
     padding: var(--spacing-sm) var(--spacing-md);
     text-align: left;
-    vertical-align: top; /* Align content to top */
+    vertical-align: top;
     word-break: break-word;
 }
 .test-results-table th {
-    background-color: #e9ecef;
+    background-color: #e9ecef; /* Use slightly darker alt background */
     font-weight: 600;
-    white-space: nowrap; /* Prevent header wrapping */
+    white-space: nowrap;
+    color: var(--heading-color);
 }
 .test-results-table tr:nth-child(even) {
-    background-color: #f8f9fa;
+    background-color: var(--input-bg-alt); /* Use alt background */
 }
 .test-results-table tr:hover {
-    background-color: #e9ecef;
+    background-color: #e9ecef; /* Slightly darker alt background */
 }
-
 .status-success { color: var(--success-color); font-weight: 500; }
 .status-error { color: var(--danger-color); font-weight: 500; }
 .status-pending { color: var(--text-muted); font-style: italic; }
@@ -395,7 +463,7 @@ hr {
 /* --- Saved Providers Section --- */
 .saved-providers {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); /* Responsive grid */
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
     gap: var(--spacing-lg);
     margin-top: var(--spacing-lg);
 }
@@ -404,24 +472,26 @@ hr {
     border: 1px solid var(--border-color);
     border-radius: var(--border-radius);
     padding: var(--spacing-md);
-    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+    box-shadow: var(--card-shadow);
     display: flex;
     flex-direction: column;
     transition: box-shadow 0.2s ease;
 }
-    .provider-card:hover {
-        box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-    }
+.provider-card:hover {
+    box-shadow: var(--card-hover-shadow);
+}
 .provider-card h4 {
     margin-bottom: var(--spacing-sm);
     word-break: break-word;
+    line-height: 1.3;
 }
 .provider-card p {
     margin: 2px 0;
-    font-size: 0.9rem;
+    font-size: var(--font-size-sm);
     color: var(--text-muted);
     word-break: break-word;
     flex-grow: 1; /* Push actions to bottom */
+    line-height: 1.4;
 }
 .provider-card p strong {
     color: var(--heading-color);
@@ -430,38 +500,36 @@ hr {
 .provider-card .model-info {
     font-style: italic;
     margin-top: var(--spacing-sm);
-    font-size: 0.85rem;
-        color: var(--info-color);
+    font-size: 0.85rem; /* Slightly smaller than sm */
+    color: var(--info-color);
 }
-    .provider-card small {
-        font-size: 0.8rem;
-        color: var(--text-muted);
-        margin-top: var(--spacing-md);
-    }
+.provider-card small {
+    font-size: 0.8rem; /* Smallest text */
+    color: var(--text-muted);
+    margin-top: var(--spacing-md);
+    display: block; /* Ensure small is on its own line */
+}
 .provider-actions {
     display: flex;
-    justify-content: flex-end; /* Align buttons to the right */
+    justify-content: flex-end;
     gap: var(--spacing-sm);
     margin-top: var(--spacing-md);
     border-top: 1px solid var(--border-color);
     padding-top: var(--spacing-md);
+    flex-wrap: wrap; /* Allow buttons to wrap */
 }
-    .provider-actions button {
-        margin: 0; /* Override default button margins */
-        flex-grow: 0; /* Don't stretch buttons */
-    }
-    .delete-provider { background-color: var(--danger-color); color: white; }
-.delete-provider:hover { background-color: var(--danger-hover-color); }
-    .use-provider { background-color: var(--info-color); color: white; }
-.use-provider:hover { background-color: var(--info-hover-color); }
-
+.provider-actions button {
+    margin: 0; /* Override default button margins */
+    flex-grow: 0;
+}
+/* Specific button colors for actions already use variables, which is good */
 .no-providers {
     text-align: center;
     color: var(--text-muted);
     font-style: italic;
     padding: var(--spacing-xl);
     grid-column: 1 / -1; /* Span full grid width */
-    background-color: #f8f9fa;
+    background-color: var(--input-bg-alt); /* Use alt background */
     border-radius: var(--border-radius);
 }
 
@@ -470,13 +538,15 @@ hr {
     margin: var(--spacing-lg) 0;
     display: flex;
     align-items: center;
+    flex-wrap: wrap; /* Allow wrapping */
+    gap: var(--spacing-md); /* Add gap for spacing between items */
 }
 .streaming-controls label {
     margin-bottom: 0;
-    margin-right: var(--spacing-md);
+    /* margin-right: var(--spacing-md); /* Replaced by gap */
     font-weight: normal;
     cursor: pointer;
-    display: inline-flex; /* Align checkbox and text */
+    display: inline-flex;
     align-items: center;
     color: var(--text-color);
 }
@@ -484,7 +554,8 @@ hr {
     margin-right: var(--spacing-sm);
     width: auto;
     cursor: pointer;
-        transform: scale(1.1);
+    transform: scale(1.1);
+    flex-shrink: 0;
 }
 .stream-typing {
     display: inline-block;
@@ -492,7 +563,7 @@ hr {
     animation: blink-caret 0.7s step-end infinite;
     border-right: 2px solid var(--text-muted);
     padding-right: 2px;
-    margin-left: 2px; /* Prevent overlap with text */
+    margin-left: 2px;
 }
 @keyframes blink-caret {
     from, to { border-color: transparent }
@@ -506,83 +577,99 @@ hr {
     flex-wrap: wrap;
 }
 .import-export-buttons button {
-        flex: 1 1 auto; /* Allow buttons to grow and wrap */
-        margin: 0;
-    }
-.import-button { background-color: var(--warning-color); color: #212529; }
-.import-button:hover { background-color: var(--warning-hover-color); }
-.export-button { background-color: var(--info-color); color: white; }
-.export-button:hover { background-color: var(--info-hover-color); }
+    flex: 1 1 auto;
+    margin: 0; /* Override default button margins */
+    min-width: 120px; /* Ensure buttons are not too narrow */
+}
+/* Specific button colors for import/export already use variables, which is good */
 
 /* --- Responsive Adjustments --- */
 @media (max-width: 768px) {
-        .main-wrapper {
-            padding: var(--spacing-md);
-        }
-        .container {
-            padding: var(--spacing-md);
-        }
+    body {
+        padding: var(--spacing-md);
+    }
+    .container {
+        padding: var(--spacing-md);
+    }
+
+    h1 { font-size: 1.5rem; margin-bottom: var(--spacing-lg); }
+    h2 { font-size: 1.3rem; }
+    h3 { font-size: 1.1rem; }
+
+    /* Adjust input group stacking */
     .input-group {
         flex-direction: column;
         align-items: stretch;
+        gap: var(--spacing-sm); /* Smaller gap when stacked */
     }
-        .input-group > label {
-            flex-basis: auto;
-            align-self: flex-start;
-        }
+    .input-group > label {
+        flex-basis: auto;
+        align-self: flex-start;
+        margin-bottom: var(--spacing-xs); /* Space below label */
+    }
+    .input-group > input,
+    .input-group > select,
+    .input-group > textarea {
+        min-width: auto; /* Remove min-width when stacked */
+    }
+    #threadCount {
+        width: 100%; /* Full width when stacked */
+        flex-basis: auto;
+        text-align: left;
+        margin-left: 0;
+    }
+
     .model-input-container {
         flex-direction: column;
-            align-items: stretch;
+        align-items: stretch;
+        gap: var(--spacing-sm); /* Smaller gap when stacked */
     }
-        .button-group {
-            flex-direction: column;
-            align-items: stretch;
-        }
-    .button-group button, .import-export-buttons button {
-            width: 100%; /* Full width buttons on smaller screens */
-            margin-right: 0;
-        }
-        .provider-name-input {
-            margin-right: 0;
-            margin-bottom: var(--spacing-sm); /* Space below input */
-        }
-        .saved-providers {
-            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-        }
-        h1 { font-size: 1.5rem; margin-bottom: var(--spacing-lg); }
-        h2 { font-size: 1.3rem; }
-        h3 { font-size: 1.1rem; }
+    .model-input-container select,
+    .model-input-container input {
+        flex-basis: auto; /* Remove flex-basis when stacked */
+        min-width: auto; /* Remove min-width when stacked */
+    }
+
+    .button-group,
+    .import-export-buttons {
+        flex-direction: column;
+        align-items: stretch;
+        gap: var(--spacing-sm); /* Smaller gap when stacked */
+    }
+    .button-group button,
+    .import-export-buttons button {
+        width: 100%; /* Full width buttons on smaller screens */
+        margin-right: 0;
+    }
+
+    .select-actions {
+        flex-direction: column;
+        align-items: stretch;
+        gap: var(--spacing-sm); /* Smaller gap when stacked */
+    }
+    .select-actions button {
+        width: 100%;
+    }
+    .select-actions .toggle-models-btn {
+        margin-left: 0; /* Reset margin */
+        margin-top: var(--spacing-sm); /* Add space when stacked */
+    }
+
+    .saved-providers {
+        grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); /* Slightly smaller min width */
+    }
 }
 
 @media (max-width: 576px) {
-        .saved-providers {
-            grid-template-columns: 1fr; /* Single column */
-        }
-        .provider-actions {
-            flex-direction: column;
-            align-items: stretch;
-        }
-        .provider-actions button {
-            width: 100%;
-        }
-        .select-actions {
-            flex-direction: column;
-            align-items: stretch;
-        }
-        .select-actions button {
-            width: 100%;
-        }
-        .select-actions .toggle-models-btn {
-            margin-left: 0; /* Reset margin */
-            margin-top: var(--spacing-sm); /* Add space when stacked */
-        }
-
-}
-
-#threadCount {
-    width: 60px; /* 保持宽度 */
-    margin-left: var(--spacing-sm);
-    margin-bottom: 0; /* 移除底部边距，确保与按钮对齐 */
-    padding: var(--spacing-sm); /* 减少内边距以适应小输入框 */
-    height: 40px; /* 统一高度 */
+    .saved-providers {
+        grid-template-columns: 1fr; /* Single column */
+    }
+    .provider-actions {
+        flex-direction: column;
+        align-items: stretch;
+        gap: var(--spacing-sm); /* Smaller gap when stacked */
+    }
+    .provider-actions button {
+        width: 100%;
+    }
 }

@@ -28,6 +28,16 @@ const exportProvidersBtn = document.getElementById('exportProvidersBtn');
 const importProvidersBtn = document.getElementById('importProvidersBtn');
 const importProvidersFile = document.getElementById('importProvidersFile');
 const threadCountInput = document.getElementById('threadCount');
+const testPromptInput = document.getElementById('testPrompt');
+const timeoutInput = document.getElementById('timeoutInput');
+
+function fetchWithTimeout(resource, options = {}, timeout = 10000) {
+    const controller = new AbortController();
+    const id = setTimeout(() => controller.abort(), timeout);
+    options.signal = controller.signal;
+    return fetch(resource, options)
+        .finally(() => clearTimeout(id));
+}
 
 // --- State Management & LocalStorage ---
 
@@ -381,10 +391,10 @@ async function fetchModels() {
 
     try {
         const modelsUrl = `${baseUrl}${baseUrl.endsWith('/v1') ? '' : '/v1'}/models`;
-        const response = await fetch(modelsUrl, {
+        const response = await fetchWithTimeout(modelsUrl, {
             method: 'GET',
             headers: { 'Authorization': `Bearer ${apiKey}` }
-        });
+        }, Number(timeoutInput.value));
 
         const data = await response.json();
 
@@ -456,6 +466,10 @@ async function testModel() {
     const baseUrl = baseUrlInput.value.trim().replace(/\/$/, "");
     const apiKey = apiKeyInput.value.trim();
     const selectedModel = customModelInput.value.trim() || modelSelect.value; // Prioritize custom input
+    if (testPromptInput.value.trim() === '') {
+        testPromptInput.value = '你好，请简短地介绍一下你自己'
+    }
+    const testPrompt = testPromptInput.value.trim();
 
     if (!baseUrl || !apiKey || !selectedModel || selectedModel === "-- 请先获取模型列表 --" || selectedModel === "-- Select a model --") {
         logResult("错误: 请确保已输入 Base URL、API Key，并已选择或输入模型名称。", 'error');
@@ -473,9 +487,9 @@ async function testModel() {
 
     try {
         if (useStreaming) {
-            await testModelWithStreaming(baseUrl, apiKey, selectedModel);
+            await testModelWithStreaming(baseUrl, apiKey, selectedModel, testPrompt);
         } else {
-            const result = await testSingleModel(baseUrl, apiKey, selectedModel);
+            const result = await testSingleModel(baseUrl, apiKey, selectedModel, testPrompt);
             // Display non-streaming result
             resultArea.classList.add('success'); // Add success class for non-streaming
             resultArea.textContent = `模型: ${selectedModel}\n状态: 成功\n响应:\n\n${result.content}`;
@@ -499,7 +513,7 @@ async function testModel() {
     }
 }
 
-async function testModelWithStreaming(baseUrl, apiKey, modelName) {
+async function testModelWithStreaming(baseUrl, apiKey, modelName, userPrompt) {
         const timestamp = new Date().toLocaleTimeString();
         resultArea.classList.add('info'); // Indicate streaming in progress
         const startMessage = document.createElement('div');
@@ -516,7 +530,7 @@ async function testModelWithStreaming(baseUrl, apiKey, modelName) {
 
         const payload = {
             model: modelName,
-            messages: [{ role: "user", content: "你好！这是一个流式传输测试。请讲一个非常短的笑话。" }],
+            messages: [{ role: "user", content: userPrompt}],
             max_tokens: 250,
             temperature: 0.7,
             stream: true
@@ -524,11 +538,11 @@ async function testModelWithStreaming(baseUrl, apiKey, modelName) {
         const chatUrl = `${baseUrl}${baseUrl.endsWith('/v1') ? '' : '/v1'}/chat/completions`;
 
         try {
-            const response = await fetch(chatUrl, {
+            const response = await fetchWithTimeout(chatUrl, {
                 method: 'POST',
                 headers: { 'Authorization': `Bearer ${apiKey}`, 'Content-Type': 'application/json' },
                 body: JSON.stringify(payload)
-            });
+            }, Number(timeoutInput.value));
 
             if (!response.ok || !response.body) {
                 const errorText = await response.text();
@@ -599,21 +613,21 @@ async function testModelWithStreaming(baseUrl, apiKey, modelName) {
         }
 }
 
-async function testSingleModel(baseUrl, apiKey, modelName) {
+async function testSingleModel(baseUrl, apiKey, modelName, userPrompt) {
     const payload = {
         model: modelName,
-        messages: [{ role: "user", content: "你好！这是一个测试。" }],
+        messages: [{ role: "user", content: userPrompt }],
         max_tokens: 80, // Reasonable limit for single test
         temperature: 0.7,
         stream: false // Explicitly false for this function
     };
     const chatUrl = `${baseUrl}${baseUrl.endsWith('/v1') ? '' : '/v1'}/chat/completions`;
 
-    const response = await fetch(chatUrl, {
+    const response = await fetchWithTimeout(chatUrl, {
         method: 'POST',
         headers: { 'Authorization': `Bearer ${apiKey}`, 'Content-Type': 'application/json' },
         body: JSON.stringify(payload)
-    });
+    }, Number(timeoutInput.value));
 
     const data = await response.json();
 
@@ -643,7 +657,7 @@ async function batchTestModels() {
     const apiKey = apiKeyInput.value.trim();
     const selectedModels = Array.from(document.querySelectorAll('#modelsContainer input[type="checkbox"]:checked')).map(cb => cb.value);
     const threadCount = parseInt(threadCountInput.value, 10);
-    
+
     if (!baseUrl || !apiKey) {
         logResult("错误: 请输入 Base URL 和 API Key。", 'error'); 
         return;
@@ -752,13 +766,17 @@ async function testModelInBatch(baseUrl, apiKey, model) {
     if (!row) return; // Should not happen
     const statusCell = row.querySelector('td:nth-child(2)');
     const responseCell = row.querySelector('td:nth-child(3)');
+    if (testPromptInput.value.trim() === '') {
+        testPromptInput = '今天的天气真不错，不是吗'
+    }
+    const testPrompt = testPromptInput.value.trim();
 
     statusCell.className = 'status-running';
     statusCell.textContent = '测试中...';
 
     try {
         // Use the non-streaming test function for batch tests
-        const result = await testSingleModel(baseUrl, apiKey, model);
+        const result = await testSingleModel(baseUrl, apiKey, model, testPrompt);
         statusCell.className = 'status-success';
         statusCell.textContent = '成功';
         let displayResponse = escapeHtml(result.content);
