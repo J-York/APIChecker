@@ -1,0 +1,588 @@
+:root {
+    --primary-color: #007bff;
+    --primary-hover-color: #0056b3;
+    --secondary-color: #6c757d;
+    --secondary-hover-color: #5a6268;
+    --success-color: #28a745;
+    --success-hover-color: #218838;
+    --danger-color: #dc3545;
+    --danger-hover-color: #c82333;
+    --warning-color: #ffc107;
+    --warning-hover-color: #e0a800;
+    --info-color: #17a2b8;
+    --info-hover-color: #138496;
+
+    --bg-color: #f8f9fa;
+    --container-bg: #ffffff;
+    --card-bg: #ffffff;
+    --input-bg: #ffffff;
+    --input-border: #ced4da;
+    --input-focus-border: #80bdff;
+    --text-color: #212529;
+    --text-muted: #6c757d;
+    --heading-color: #343a40;
+    --border-color: #dee2e6;
+    --box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+    --border-radius: 6px;
+    --font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+    --font-family-monospace: SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+
+    --spacing-xs: 4px;
+    --spacing-sm: 8px;
+    --spacing-md: 16px;
+    --spacing-lg: 24px;
+    --spacing-xl: 32px;
+}
+
+/* --- 基础样式 --- */
+*, *::before, *::after {
+    box-sizing: border-box;
+}
+
+html {
+    font-size: 16px; /* 基准字号 */
+}
+
+body {
+    font-family: var(--font-family);
+    line-height: 1.6;
+    color: var(--text-color);
+    background-color: var(--bg-color);
+    margin: 0;
+    padding: var(--spacing-lg);
+}
+
+.main-wrapper {
+    max-width: 960px;
+    margin: 0 auto;
+    display: grid;
+    gap: var(--spacing-lg);
+}
+
+.container {
+    background-color: var(--container-bg);
+    padding: var(--spacing-lg);
+    border-radius: var(--border-radius);
+    box-shadow: var(--box-shadow);
+}
+
+h1, h2, h3, h4 {
+    color: var(--heading-color);
+    margin-top: 0;
+    margin-bottom: var(--spacing-md);
+    font-weight: 500;
+}
+
+h1 {
+    font-size: 1.75rem;
+    text-align: center;
+    margin-bottom: var(--spacing-xl);
+}
+
+h2 {
+    font-size: 1.5rem;
+    border-bottom: 1px solid var(--border-color);
+    padding-bottom: var(--spacing-sm);
+    margin-bottom: var(--spacing-lg);
+}
+
+h3 {
+    font-size: 1.25rem;
+    margin-bottom: var(--spacing-md);
+}
+
+h4 {
+    font-size: 1.1rem;
+}
+
+label {
+    display: block;
+    margin-bottom: var(--spacing-xs);
+    font-weight: 500;
+    color: var(--text-muted);
+    font-size: 0.9rem;
+}
+
+input[type="text"],
+input[type="password"],
+input[type="number"],
+select {
+    width: 100%;
+    padding: var(--spacing-sm) var(--spacing-md);
+    margin-bottom: var(--spacing-md);
+    border: 1px solid var(--input-border);
+    border-radius: var(--border-radius);
+    background-color: var(--input-bg);
+    font-size: 1rem;
+    transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+    height: 40px; /* 新增：统一高度，确保与按钮高度一致 */
+    box-sizing: border-box; /* 确保高度计算包含内边距和边框 */
+}
+
+input[type="text"]:focus,
+input[type="password"]:focus,
+input[type="number"],
+select:focus {
+    border-color: var(--input-focus-border);
+    outline: 0;
+    box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
+}
+
+select {
+    appearance: none; /* Remove default arrow */
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3e%3cpath fill='none' stroke='%23343a40' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M2 5l6 6 6-6'/%3e%3c/svg%3e");
+    background-repeat: no-repeat;
+    background-position: right var(--spacing-md) center;
+    background-size: 16px 12px;
+    padding-right: calc(var(--spacing-md) * 2.5); /* Make space for arrow */
+}
+
+button {
+    display: inline-flex; /* Aligns icon/loader */
+    align-items: center;
+    justify-content: center;
+    padding: 0 18px; /* 修改：移除固定高度的padding，改为自适应 */
+    border: none;
+    border-radius: var(--border-radius);
+    cursor: pointer;
+    font-size: 0.95rem;
+    font-weight: 500;
+    line-height: 1.5;
+    text-align: center;
+    white-space: nowrap;
+    vertical-align: middle;
+    user-select: none;
+    transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out, border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+    margin-right: var(--spacing-sm); /* Default spacing */
+    margin-bottom: var(--spacing-sm); /* Spacing for wrapping */
+    height: 40px; /* 新增：统一高度，与输入框一致 */
+    min-width: 80px; /* 新增：确保按钮有最小宽度，防止内容过短时显得不协调 */
+}
+
+button:not(:disabled):hover {
+    filter: brightness(90%);
+}
+
+button:disabled {
+    background-color: #cccccc;
+    color: #666666;
+    cursor: not-allowed;
+    opacity: 0.65;
+}
+
+/* --- Specific Button Colors --- */
+.btn-primary { background-color: var(--primary-color); color: white; }
+.btn-primary:hover { background-color: var(--primary-hover-color); }
+
+.btn-success { background-color: var(--success-color); color: white; }
+.btn-success:hover { background-color: var(--success-hover-color); }
+
+.btn-danger { background-color: var(--danger-color); color: white; }
+.btn-danger:hover { background-color: var(--danger-hover-color); }
+
+.btn-warning { background-color: var(--warning-color); color: #212529; }
+.btn-warning:hover { background-color: var(--warning-hover-color); }
+
+.btn-info { background-color: var(--info-color); color: white; }
+.btn-info:hover { background-color: var(--info-hover-color); }
+
+.btn-secondary { background-color: var(--secondary-color); color: white; }
+.btn-secondary:hover { background-color: var(--secondary-hover-color); }
+
+.btn-outline-secondary {
+    color: var(--secondary-color);
+    border: 1px solid var(--secondary-color);
+    background-color: transparent;
+}
+.btn-outline-secondary:hover {
+    color: white;
+    background-color: var(--secondary-color);
+}
+
+.btn-sm { /* Smaller buttons for actions */
+    padding: 0 10px; /* 修改：调整内边距以适应小按钮 */
+    font-size: 0.8rem;
+    height: 30px; /* 新增：小按钮使用较小高度 */
+    min-width: 60px; /* 新增：小按钮的最小宽度 */
+}
+
+hr {
+    border: 0;
+    border-top: 1px solid var(--border-color);
+    margin: var(--spacing-xl) 0;
+}
+
+/* --- Result Area --- */
+#resultArea {
+    margin-top: var(--spacing-lg);
+    padding: var(--spacing-md);
+    border: 1px solid var(--border-color);
+    background-color: #f8f9fa;
+    border-radius: var(--border-radius);
+    white-space: pre-wrap;
+    word-wrap: break-word;
+    font-family: var(--font-family-monospace);
+    min-height: 150px;
+    max-height: 450px;
+    overflow-y: auto;
+    font-size: 0.9rem;
+    color: var(--text-muted); /* Default color */
+}
+
+#resultArea.success { border-left: 4px solid var(--success-color); color: var(--success-color); background-color: #e9f7ef;}
+#resultArea.error { border-left: 4px solid var(--danger-color); color: var(--danger-color); background-color: #fbe Sdf;}
+#resultArea.info { border-left: 4px solid var(--info-color); color: var(--info-color); background-color: #e8f7fa;}
+
+/* --- Loader --- */
+.loader {
+    border: 4px solid #f3f3f3;
+    border-top: 4px solid var(--primary-color);
+    border-radius: 50%;
+    width: 20px;
+    height: 20px;
+    animation: spin 1s linear infinite;
+    display: none; /* Hidden by default */
+    vertical-align: middle;
+    margin-left: var(--spacing-sm);
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+/* --- Layout Sections --- */
+.input-group {
+        display: flex;
+        gap: var(--spacing-md);
+        margin-bottom: var(--spacing-md);
+        align-items: flex-end; /* Align items nicely */
+}
+.input-group > * {
+    margin-bottom: 0; /* Remove default bottom margin */
+}
+.input-group > label {
+        flex-basis: 120px; /* Fixed label width */
+        margin-bottom: var(--spacing-xs); /* Small space below label */
+        align-self: center; /* Center label vertically */
+}
+.input-group > input, .input-group > select {
+    flex: 1; /* Input takes remaining space */
+}
+
+
+.button-group {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--spacing-sm);
+    margin-top: var(--spacing-md);
+    margin-bottom: var(--spacing-lg);
+    align-items: center; /* Align buttons vertically */
+}
+    .provider-name-input {
+    flex: 1 1 200px; /* Allow growing and shrinking, base width */
+        margin-right: var(--spacing-sm); /* Space before save button */
+    }
+
+/* --- Model Selection & Testing --- */
+.model-input-container {
+    display: flex;
+    gap: var(--spacing-md);
+    margin-bottom: var(--spacing-md);
+    align-items: center;
+}
+.model-input-container select { flex: 3; margin-bottom: 0; }
+.model-input-container input { flex: 2; margin-bottom: 0; }
+
+
+#multiModelSection {
+    margin-top: var(--spacing-xl);
+    padding-top: var(--spacing-lg);
+    border-top: 1px solid var(--border-color);
+}
+
+.select-actions {
+    display: flex;
+    justify-content: flex-start; /* Align actions to the left */
+    gap: var(--spacing-sm);
+    margin-bottom: var(--spacing-md);
+    flex-wrap: wrap;
+}
+.select-actions button {
+    margin-right: 0; /* Reset default margin */
+    padding: 6px 12px;
+    font-size: 0.85rem;
+}
+    .select-actions .toggle-models-btn {
+    margin-left: auto; /* Push toggle button to the right */
+    }
+
+
+.models-container {
+    max-height: 300px;
+    overflow-y: auto;
+    border: 1px solid var(--border-color);
+    border-radius: var(--border-radius);
+    padding: var(--spacing-md);
+    margin-bottom: var(--spacing-md);
+    background-color: #f8f9fa; /* Slight background */
+}
+.model-checkbox {
+    display: flex;
+    align-items: center;
+    margin-bottom: var(--spacing-sm);
+    padding: var(--spacing-xs) var(--spacing-sm);
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.15s ease;
+}
+.model-checkbox:hover {
+    background-color: #e9ecef;
+}
+.model-checkbox input[type="checkbox"] {
+    margin-right: var(--spacing-md);
+    width: auto; /* Override default width */
+    margin-bottom: 0; /* Override default margin */
+    cursor: pointer;
+    transform: scale(1.1); /* Slightly larger checkbox */
+}
+.model-checkbox label {
+    margin-bottom: 0;
+    font-weight: normal;
+    cursor: pointer;
+    flex: 1;
+    color: var(--text-color); /* Ensure label color is standard */
+}
+.no-models {
+    text-align: center;
+    color: var(--text-muted);
+    font-style: italic;
+    padding: var(--spacing-lg) 0;
+}
+
+/* --- Test Results Table --- */
+.test-results-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: var(--spacing-lg);
+    font-size: 0.9rem;
+}
+.test-results-table th,
+.test-results-table td {
+    border: 1px solid var(--border-color);
+    padding: var(--spacing-sm) var(--spacing-md);
+    text-align: left;
+    vertical-align: top; /* Align content to top */
+    word-break: break-word;
+}
+.test-results-table th {
+    background-color: #e9ecef;
+    font-weight: 600;
+    white-space: nowrap; /* Prevent header wrapping */
+}
+.test-results-table tr:nth-child(even) {
+    background-color: #f8f9fa;
+}
+.test-results-table tr:hover {
+    background-color: #e9ecef;
+}
+
+.status-success { color: var(--success-color); font-weight: 500; }
+.status-error { color: var(--danger-color); font-weight: 500; }
+.status-pending { color: var(--text-muted); font-style: italic; }
+.status-running { color: var(--info-color); font-style: italic; }
+
+/* --- Saved Providers Section --- */
+.saved-providers {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); /* Responsive grid */
+    gap: var(--spacing-lg);
+    margin-top: var(--spacing-lg);
+}
+.provider-card {
+    background-color: var(--card-bg);
+    border: 1px solid var(--border-color);
+    border-radius: var(--border-radius);
+    padding: var(--spacing-md);
+    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+    display: flex;
+    flex-direction: column;
+    transition: box-shadow 0.2s ease;
+}
+    .provider-card:hover {
+        box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    }
+.provider-card h4 {
+    margin-bottom: var(--spacing-sm);
+    word-break: break-word;
+}
+.provider-card p {
+    margin: 2px 0;
+    font-size: 0.9rem;
+    color: var(--text-muted);
+    word-break: break-word;
+    flex-grow: 1; /* Push actions to bottom */
+}
+.provider-card p strong {
+    color: var(--heading-color);
+    margin-right: var(--spacing-xs);
+}
+.provider-card .model-info {
+    font-style: italic;
+    margin-top: var(--spacing-sm);
+    font-size: 0.85rem;
+        color: var(--info-color);
+}
+    .provider-card small {
+        font-size: 0.8rem;
+        color: var(--text-muted);
+        margin-top: var(--spacing-md);
+    }
+.provider-actions {
+    display: flex;
+    justify-content: flex-end; /* Align buttons to the right */
+    gap: var(--spacing-sm);
+    margin-top: var(--spacing-md);
+    border-top: 1px solid var(--border-color);
+    padding-top: var(--spacing-md);
+}
+    .provider-actions button {
+        margin: 0; /* Override default button margins */
+        flex-grow: 0; /* Don't stretch buttons */
+    }
+    .delete-provider { background-color: var(--danger-color); color: white; }
+.delete-provider:hover { background-color: var(--danger-hover-color); }
+    .use-provider { background-color: var(--info-color); color: white; }
+.use-provider:hover { background-color: var(--info-hover-color); }
+
+.no-providers {
+    text-align: center;
+    color: var(--text-muted);
+    font-style: italic;
+    padding: var(--spacing-xl);
+    grid-column: 1 / -1; /* Span full grid width */
+    background-color: #f8f9fa;
+    border-radius: var(--border-radius);
+}
+
+/* --- Streaming & Import/Export --- */
+.streaming-controls {
+    margin: var(--spacing-lg) 0;
+    display: flex;
+    align-items: center;
+}
+.streaming-controls label {
+    margin-bottom: 0;
+    margin-right: var(--spacing-md);
+    font-weight: normal;
+    cursor: pointer;
+    display: inline-flex; /* Align checkbox and text */
+    align-items: center;
+    color: var(--text-color);
+}
+.streaming-controls input[type="checkbox"] {
+    margin-right: var(--spacing-sm);
+    width: auto;
+    cursor: pointer;
+        transform: scale(1.1);
+}
+.stream-typing {
+    display: inline-block;
+    vertical-align: bottom;
+    animation: blink-caret 0.7s step-end infinite;
+    border-right: 2px solid var(--text-muted);
+    padding-right: 2px;
+    margin-left: 2px; /* Prevent overlap with text */
+}
+@keyframes blink-caret {
+    from, to { border-color: transparent }
+    50% { border-color: var(--text-muted); }
+}
+
+.import-export-buttons {
+    display: flex;
+    gap: var(--spacing-md);
+    margin-bottom: var(--spacing-lg);
+    flex-wrap: wrap;
+}
+.import-export-buttons button {
+        flex: 1 1 auto; /* Allow buttons to grow and wrap */
+        margin: 0;
+    }
+.import-button { background-color: var(--warning-color); color: #212529; }
+.import-button:hover { background-color: var(--warning-hover-color); }
+.export-button { background-color: var(--info-color); color: white; }
+.export-button:hover { background-color: var(--info-hover-color); }
+
+/* --- Responsive Adjustments --- */
+@media (max-width: 768px) {
+        .main-wrapper {
+            padding: var(--spacing-md);
+        }
+        .container {
+            padding: var(--spacing-md);
+        }
+    .input-group {
+        flex-direction: column;
+        align-items: stretch;
+    }
+        .input-group > label {
+            flex-basis: auto;
+            align-self: flex-start;
+        }
+    .model-input-container {
+        flex-direction: column;
+            align-items: stretch;
+    }
+        .button-group {
+            flex-direction: column;
+            align-items: stretch;
+        }
+    .button-group button, .import-export-buttons button {
+            width: 100%; /* Full width buttons on smaller screens */
+            margin-right: 0;
+        }
+        .provider-name-input {
+            margin-right: 0;
+            margin-bottom: var(--spacing-sm); /* Space below input */
+        }
+        .saved-providers {
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+        }
+        h1 { font-size: 1.5rem; margin-bottom: var(--spacing-lg); }
+        h2 { font-size: 1.3rem; }
+        h3 { font-size: 1.1rem; }
+}
+
+@media (max-width: 576px) {
+        .saved-providers {
+            grid-template-columns: 1fr; /* Single column */
+        }
+        .provider-actions {
+            flex-direction: column;
+            align-items: stretch;
+        }
+        .provider-actions button {
+            width: 100%;
+        }
+        .select-actions {
+            flex-direction: column;
+            align-items: stretch;
+        }
+        .select-actions button {
+            width: 100%;
+        }
+        .select-actions .toggle-models-btn {
+            margin-left: 0; /* Reset margin */
+            margin-top: var(--spacing-sm); /* Add space when stacked */
+        }
+
+}
+
+#threadCount {
+    width: 60px; /* 保持宽度 */
+    margin-left: var(--spacing-sm);
+    margin-bottom: 0; /* 移除底部边距，确保与按钮对齐 */
+    padding: var(--spacing-sm); /* 减少内边距以适应小输入框 */
+    height: 40px; /* 统一高度 */
+}
